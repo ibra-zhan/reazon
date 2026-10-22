@@ -27,7 +27,7 @@ test("level is personal, with a per-project override", (t) => {
   assert.deepEqual(fs.readdirSync(box.project), [".git"]);
 });
 
-test("new decision turns reazon on and records the level", (t) => {
+test("new decision turns Reazon on and records the level", (t) => {
   const box = sandbox(t);
   cli(box, "level", "--set", "beginner");
   const { json } = cli(box, "new", "--title", "Where notes are stored");

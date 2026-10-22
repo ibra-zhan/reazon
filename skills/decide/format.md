@@ -1,6 +1,6 @@
-# reazon output format
+# Reazon output format
 
-Every reazon message has the same shape so the learner always knows where they
+Every Reazon message has the same shape so the learner always knows where they
 are and what's expected. Render as Markdown directly. No code fences around blocks.
 
 ## Stage strip

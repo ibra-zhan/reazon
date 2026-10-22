@@ -1,12 +1,16 @@
 {
   "name": "reazon",
-  "owner": { "name": "Ibrahim Tleukulov" },
-  "metadata": { "description": "reazon: learn software design by deciding before Claude builds." },
+  "owner": {
+    "name": "Ibrahim Tleukulov"
+  },
+  "metadata": {
+    "description": "Reazon: learn software design for real while Claude builds."
+  },
   "plugins": [
     {
       "name": "reazon",
       "source": "./",
-      "description": "Every code change starts with a decision you reason through. Code stays locked until you do."
+      "description": "Learn software design for real while Claude builds your project. Before any code, you work through each design decision: learn the problem, take your shot, see where it breaks, and defend your choice. Then Claude builds it."
     }
   ]
 }

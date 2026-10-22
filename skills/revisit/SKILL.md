@@ -4,14 +4,14 @@ description: Reopen an earlier decision that no longer fits, by reasoning throug
 disable-model-invocation: true
 ---
 
-# reazon revisit
+# Reazon revisit
 
 A past decision stays as history. Revisiting creates a new decision that
 replaces it once accepted, so the record shows how the thinking changed.
 
 The helper is `node "${CLAUDE_PLUGIN_ROOT}/bin/reazon.mjs" <command> --cwd "<absolute project folder>"`,
 written below as `reazon <command>`. Quote paths. It prints JSON; on `"ok": false`,
-explain the error and stop. Don't edit reazon files by hand as a fallback.
+explain the error and stop. Don't edit Reazon files by hand as a fallback.
 
 1. Run `reazon status`. If the user didn't name a decision, show the accepted
    and built ones (number, title) and ask which one with AskUserQuestion

@@ -1,14 +1,14 @@
 ---
 name: level
-description: See or change your reazon level (beginner, intermediate, advanced), for you personally or just for this project.
+description: See or change your Reazon level (beginner, intermediate, advanced), for you personally or just for this project.
 disable-model-invocation: true
 ---
 
-# reazon level
+# Reazon level
 
 The helper is `node "${CLAUDE_PLUGIN_ROOT}/bin/reazon.mjs" <command> --cwd "<absolute project folder>"`,
 written below as `reazon <command>`. Quote paths. It prints JSON; on `"ok": false`,
-explain the error and stop. Don't edit reazon files by hand as a fallback.
+explain the error and stop. Don't edit Reazon files by hand as a fallback.
 
 1. Run `reazon level` to see the current level and its source.
 2. Ask with AskUserQuestion (header `Level`, `multiSelect: false`):

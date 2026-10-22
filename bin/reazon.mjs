@@ -142,7 +142,7 @@ const commands = {
       if (!old) throw new Error(`No decision ${flags.supersedes} to supersede.`);
       supersedes = old.id;
     }
-    // Starting a decision turns reazon on for this project.
+    // Starting a decision turns Reazon on for this project.
     updateProject(root, { enabled: true });
     const { level } = effectiveLevel(profile, root);
     const decision = createDecision(dir, { title, level, supersedes });

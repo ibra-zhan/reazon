@@ -1,5 +1,5 @@
 {
-  "description": "reazon: gate code edits on accepted decisions, restore context, end chore passes.",
+  "description": "Reazon: keep code locked until the learner has worked through the decision, restore learning context, end chore passes.",
   "hooks": {
     "SessionStart": [
       {

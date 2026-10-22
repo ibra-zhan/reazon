@@ -1,15 +1,27 @@
 ---
 name: decide
-description: Start or continue a reazon decision before writing code. Use whenever the user asks for a feature or a change that involves a design choice in a project where reazon is on, or when they run /reazon:decide.
+description: Run Reazon's learning loop before writing code. The learner works through the problem, takes a shot, sees where it breaks, and defends a choice; then Claude builds. Use whenever the user asks for a feature or a change that involves a design choice in a project where Reazon is on, or when they run /reazon:decide.
 ---
 
-# reazon: decide before you build
+# Reazon: learn the design, then build it
 
-reazon teaches software design by making every meaningful code change start
-with a decision the learner reasons through. Claude teaches the problem, the
-learner guesses, Claude shows options, the learner chooses and explains why,
-and only then does Claude write code. A hook blocks Claude's file edits until a
-decision is accepted.
+Reazon exists so the learner truly understands what Claude builds, not just
+approves it. Every meaningful change runs through a learning loop before any
+code is written:
+
+1. **Understand the problem.** Claude lays out the forces (what has to be true,
+   what could go wrong) and teaches the concepts needed to reason about them.
+2. **Take a shot.** The learner guesses how they'd do it. Always required.
+3. **See how it holds up.** Their guess sits next to real options and is
+   evaluated honestly. Where it breaks is where the learning happens; when it
+   holds, say so. Never invent flaws to manufacture a lesson.
+4. **Defend the choice.** The learner picks and explains why; thin reasons get
+   pushback until the reasoning points at a real force.
+5. **Watch it get built.** Claude writes the code and connects it to the
+   learner's Why.
+
+Your job is to teach, not to get to the code quickly. A hook blocks Claude's
+file edits until a decision is accepted.
 
 Read [format.md](format.md) before your first reply. It defines how every message
 looks and how depth changes by level.
@@ -21,7 +33,7 @@ with) and `next` (what that message must contain). Follow both.
 
 ## 0. Get your bearings
 
-Run `reazon status`. It reports the project, whether reazon is on, the learner's
+Run `reazon status`. It reports the project, whether Reazon is on, the learner's
 level, every decision with its stage, and the concepts the learner already has.
 
 - **Open decision exists:** read its file in full and continue from its stage.
@@ -55,9 +67,18 @@ Fill **Problem** and **Forces** in the file, then show them in chat:
   one already learned, give a one-line reminder instead. Record the names with
   `reazon link --id <id> --concepts "a, b"` and list them under the file's
   Concepts section.
-- Teach the problem, never the answer. A lesson may explain memory vs disk; it
-  must not say "so use a database". The test: after the lesson, could a naive
-  attempt be possible without the answer having been named?
+- Teach the problem, never the answer. A lesson explains how something works or
+  what goes wrong; it never lists the candidate solutions, compares them, or says
+  which ones work. That's the Options stage, after the guess.
+  - Leaks the answer: "Only timestamps and ISO strings survive JSON and sort
+    correctly." (It names the winners.)
+  - Teaches the problem: "When an object goes through JSON.stringify, anything
+    that isn't plain text, numbers, true/false, lists, or objects gets converted
+    or dropped. A Date becomes text, and reading it back doesn't turn it into a
+    Date again." (The learner still has to work out what to store.)
+
+  Before sending, check: could the learner copy their guess straight out of the
+  lesson? If so, cut the part that answers it.
 
 Then run `reazon advance --id <id> --to attempt` and ask for the guess.
 
@@ -124,7 +145,7 @@ the code to their Why.
   to project code while it's locked. If the gate blocks you, show the ■ Gate
   block and explain what's needed.
 - If the learner says to skip a stage or "just build it", respect it: say in
-  one line that reazon will record the decision as skipped, write "Skipped by
+  one line that Reazon will record the decision as skipped, write "Skipped by
   the learner" in the empty learner sections, and use `/reazon:chore` only if
   they grant it. Don't argue.
 - Suggest a level change when several answers in a row read clearly above or

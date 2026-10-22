@@ -1,5 +1,5 @@
-// SessionStart hook: tells Claude that reazon is on for this project, the
-// learner's level, and where each decision stands. Silent when reazon is off.
+// SessionStart hook: tells Claude that Reazon is on for this project, the
+// learner's level, and where each decision stands. Silent when Reazon is off.
 
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -35,7 +35,7 @@ export function buildContext(cwd) {
   const concepts = listConcepts();
 
   const lines = [
-    `reazon is on for this project (${root}).`,
+    `Reazon is on for this project (${root}).`,
     `Before working on any code change, read ${path.join(PLUGIN_ROOT, "skills/decide/SKILL.md")} ` +
       "and follow it. Code edits are gated until a decision is accepted.",
     level

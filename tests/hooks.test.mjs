@@ -19,7 +19,7 @@ function denied(result) {
   return out.permissionDecisionReason;
 }
 
-test("gate does nothing where reazon is off", (t) => {
+test("gate does nothing where Reazon is off", (t) => {
   const box = sandbox(t);
   assert.equal(denied(hook(box, "gate.mjs", edit(box, path.join(box.project, "src/app.js")))), null);
 });
@@ -121,7 +121,7 @@ test("session start is silent when off and summarizes when on", (t) => {
   const out = JSON.parse(hook(box, "session-start.mjs", start).stdout).hookSpecificOutput;
   assert.equal(out.hookEventName, "SessionStart");
   const context = out.additionalContext;
-  assert.match(context, /reazon is on/);
+  assert.match(context, /Reazon is on/);
   assert.match(context, /skills\/decide\/SKILL\.md/);
   assert.match(context, /Learner level: beginner \(personal\)/);
   assert.match(context, /0001 · Where notes are stored · stage: options/);

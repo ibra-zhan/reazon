@@ -1,8 +1,17 @@
 {
   "name": "reazon",
   "version": "0.1.0",
-  "description": "Learn software design while Claude builds: every code change starts with a decision you reason through, and a gate keeps code locked until you have.",
-  "author": { "name": "Ibrahim Tleukulov" },
+  "description": "Learn software design for real while Claude builds your project. Before any code, you work through each design decision: learn the problem, take your shot, see where it breaks, and defend your choice. Then Claude builds it.",
+  "author": {
+    "name": "Ibrahim Tleukulov"
+  },
   "license": "MIT",
-  "keywords": ["learning", "architecture", "decision-records", "adr", "teaching"]
+  "keywords": [
+    "learning",
+    "software-design",
+    "architecture",
+    "education",
+    "teaching",
+    "decision-records"
+  ]
 }
