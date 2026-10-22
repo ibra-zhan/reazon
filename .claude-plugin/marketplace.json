@@ -1,0 +1,12 @@
+{
+  "name": "reazon",
+  "owner": { "name": "Ibrahim Tleukulov" },
+  "metadata": { "description": "reazon: learn software design by deciding before Claude builds." },
+  "plugins": [
+    {
+      "name": "reazon",
+      "source": "./",
+      "description": "Every code change starts with a decision you reason through. Code stays locked until you do."
+    }
+  ]
+}

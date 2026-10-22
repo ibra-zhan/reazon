@@ -1,0 +1,8 @@
+{
+  "name": "reazon",
+  "version": "0.1.0",
+  "description": "Learn software design while Claude builds: every code change starts with a decision you reason through, and a gate keeps code locked until you have.",
+  "author": { "name": "Ibrahim Tleukulov" },
+  "license": "MIT",
+  "keywords": ["learning", "architecture", "decision-records", "adr", "teaching"]
+}
