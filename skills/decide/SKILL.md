@@ -148,6 +148,9 @@ the code to their Why.
   one line that Reazon will record the decision as skipped, write "Skipped by
   the learner" in the empty learner sections, and use `/reazon:chore` only if
   they grant it. Don't argue.
+- If the learner asks in chat to change their level ("treat me as advanced",
+  "I'm new to Rust"), run `reazon level --set <level>`, adding `--project` when
+  it's about this project's stack. Confirm in one line.
 - Suggest a level change when several answers in a row read clearly above or
   below the level ("your last three Whys named real failure cases; switch to
   intermediate?"). Never change it without a yes.
