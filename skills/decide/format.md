@@ -21,13 +21,14 @@ bold label line. Use only these labels:
 
 | Label | Use for |
 |---|---|
-| **◇ Forces** | What has to be true and what could go wrong. Bullets. |
+| **◇ What matters** | Optional, only for a real tradeoff the brief doesn't settle. The needs and risks the options are judged against; each bullet cites the brief or is marked as your assumption. |
+| **◇ Decision map** | The decisions the project needs, one line each, tied to the brief. |
 | **◇ Concept: \<name\>** · *new, saved to concepts/\<file\>.md* | A lesson for a concept the learner hasn't had. |
 | **◇ Concept: \<name\>** · *learned in \<project\> \<id\>* | A one-line reminder of a known concept. |
 | **◇ Options** | The options table, then one or two sentences about the learner's idea. |
-| **◇ Pushback** | Why the reasoning is thin, pointing at a specific force. |
+| **◇ Pushback** | Why the reasoning is thin, pointing at a specific item in What matters or the brief. |
 | **◇ Built** | Files changed, tests and results, and how the code follows their Why. |
-| **✓ Recorded as your first idea** / **✓ Recorded as your Why** | A blockquote of exactly what went into the file. |
+| **✓ Recorded in your brief** / **✓ Recorded as your first idea** / **✓ Recorded as your Why** | A blockquote of exactly what went into the file. |
 | **✓ Unlocked** | What coding work the accepted decision covers. |
 | **■ Gate** | The gate blocked an edit: what's missing and how to continue. |
 | **▶ Your turn** | The single question for the learner. Always the last block. |
@@ -40,10 +41,12 @@ Rules:
   strip. No exceptions: it's how the learner checks the transcription.
 - Ask open reasoning questions in chat, not in a picker. Use AskUserQuestion
   only for fixed choices: the level question and chore confirmations.
-- Keep explanations short: Forces and Options are bullets and tables; a Concept
+- Keep explanations short: What matters and Options are bullets and tables; a Concept
   lesson is at most two short paragraphs plus an optional tiny example.
 - No praise, scores, or hype. Say what's right and what's missing, factually.
 - Messages outside a decision (status, chores) skip the stage strip.
+- Brief and decision-map messages start with **Project brief** in bold instead
+  of a stage strip, since no decision exists yet.
 
 ## Options table
 
@@ -58,7 +61,7 @@ The structure never changes; the content does.
 
 | Block | Beginner | Intermediate | Advanced |
 |---|---|---|---|
-| Forces | 2-3, everyday language, concrete scenarios | 3-4, including how parts interact | Edge cases, failure modes, scale, operations |
+| What matters (when shown) | 2-3, everyday language, concrete scenarios | 3-4, including how parts interact | Edge cases, failure modes, scale, operations |
 | Concept | Full lesson with an everyday analogy | Short definition | Skip unless niche; name it and move on |
 | Options | 2, plain words, no jargon without a gloss | 3, tradeoff table | 3+, including less obvious ones and operational costs |
 | Pushback | Gentle, one point at a time | Points to the specific gap | Challenges the premise itself |
@@ -93,7 +96,7 @@ up" instead of rewriting the lesson.
 
 ## Decision file sections
 
-Problem, Forces, Concepts, Options, and Outcome are written by Claude. Decision is
+Problem, What matters, Concepts, Options, and Outcome are written by Claude. Decision is
 the name of the option the learner chose. Your first idea and Why are the
 learner's own words, recorded from chat as blockquotes:
 

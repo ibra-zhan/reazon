@@ -21,7 +21,8 @@ explain the error and stop. Don't edit Reazon files by hand as a fallback.
    short recap. Then ask, as ▶ Your turn: what changed that makes this decision
    not fit anymore? Wait.
 4. Run `reazon new --title "<question>" --supersedes <old id>` and follow the
-   decide guide from Framing. The forces must include what changed. The old
-   choice is one of the options, evaluated against the new forces.
+   decide guide from Framing. What matters must include what changed, and if the
+   change is about the project's goals, update the brief first in the learner's
+   words. The old choice is one of the options, evaluated against the new list.
 5. When the new decision is accepted, the helper marks the old one superseded
    and links both. Mention that in the ✓ Unlocked block.

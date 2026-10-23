@@ -54,7 +54,7 @@ export function fill(file, sections) {
 
 export const ALL_SECTIONS = {
   Problem: "Notes vanish when the app closes.",
-  Forces: "- Survive restarts\n- Survive a crash mid-save",
+  "What matters": "- Survive restarts\n- Survive a crash mid-save",
   "Your first idea (your words)": "> save everything to a file every time I type",
   Options: "1. JSON file (your idea)\n2. SQLite",
   Decision: "> SQLite",
@@ -62,8 +62,22 @@ export const ALL_SECTIONS = {
   Outcome: "Added src/db.js; 3 tests pass.",
 };
 
+export const BRIEF_ANSWERS = {
+  "Who it's for (your words)": "> me, on my laptop",
+  "What they should be able to do (your words)": "> keep notes after closing the app",
+  "What will change over time (your words)": "> I add notes every day",
+};
+
+// Create and fill the brief, as Claude would after the learner answers.
+export function completeBrief(box) {
+  const { file } = cli(box, "brief").json.brief;
+  fill(file, BRIEF_ANSWERS);
+  return file;
+}
+
 // Move a new decision all the way to the given stage.
 export function walkTo(box, stage) {
+  if (!cli(box, "status").json.brief.complete) completeBrief(box);
   const id = cli(box, "new", "--title", "Where notes are stored").json.decision.id;
   const file = cli(box, "status").json.decisions.find((d) => d.id === id).file;
   fill(file, ALL_SECTIONS);

@@ -20,7 +20,7 @@ test("template parses back with every learner section empty", () => {
   assert.equal(d.title, "Where notes are stored");
   assert.equal(d.status, "framing");
   assert.equal(d.fields.level, "beginner");
-  for (const key of ["problem", "forces", "your first idea", "options", "decision", "why", "outcome"]) {
+  for (const key of ["what you want", "problem", "what matters", "your first idea", "options", "decision", "why", "outcome"]) {
     assert.equal(d.filled[key], false, key);
   }
 });
@@ -45,8 +45,9 @@ test("stages move forward one at a time and need their sections", (t) => {
   const dir = path.join(project, "docs/decisions");
   const d = createDecision(dir, { title: "Storage" });
   assert.throws(() => advance(dir, d.id, "options"), /next stage is "attempt"/);
-  assert.throws(() => advance(dir, d.id, "attempt"), /problem, forces/);
-  fill(d.file, { Problem: ALL_SECTIONS.Problem, Forces: ALL_SECTIONS.Forces });
+  assert.throws(() => advance(dir, d.id, "attempt"), /Empty sections: problem\./);
+  // What matters is optional: Problem alone is enough to move on.
+  fill(d.file, { Problem: ALL_SECTIONS.Problem });
   assert.equal(advance(dir, d.id, "attempt").status, "attempt");
   assert.throws(() => advance(dir, d.id, "options"), /your first idea/);
   fill(d.file, { "Your first idea (your words)": "> a file" });
@@ -103,4 +104,9 @@ test("symlinked decision files are ignored", (t) => {
   fs.writeFileSync(outside, template({ id: "0001", title: "x" }).replace("Status: framing", "Status: accepted"));
   fs.symlinkSync(outside, path.join(dir, "0001-x.md"));
   assert.deepEqual(listDecisions(dir), []);
+});
+
+test("older files that say Forces still count as What matters", () => {
+  const d = parseDecision("# 0001 · x\n\nStatus: framing\n\n## Forces\n- survive restarts\n", "d/0001-x.md");
+  assert.equal(d.filled["what matters"], true);
 });

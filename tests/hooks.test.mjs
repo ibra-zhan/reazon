@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 import path from "node:path";
 import test from "node:test";
-import { cli, hook, sandbox, walkTo } from "./helpers.mjs";
+import { cli, completeBrief, hook, sandbox, walkTo } from "./helpers.mjs";
 
 const edit = (box, file, tool = "Edit") => ({
   hook_event_name: "PreToolUse",
@@ -61,6 +61,7 @@ test("an accepted decision unlocks; built locks again", (t) => {
 
 test("gate explains an accepted decision with empty learner sections", (t) => {
   const box = sandbox(t);
+  completeBrief(box);
   const { file } = cli(box, "new", "--title", "x").json.decision;
   fs.writeFileSync(file, fs.readFileSync(file, "utf8").replace("Status: framing", "Status: accepted"));
   const reason = denied(hook(box, "gate.mjs", edit(box, path.join(box.project, "a.js"))));
@@ -127,6 +128,7 @@ test("session start is silent when off and summarizes when on", (t) => {
   assert.match(context, /0001 · Where notes are stored · stage: options/);
   assert.match(context, /Code is locked/);
   assert.match(context, /memory-vs-disk/);
+  assert.match(context, /Project brief: .*brief\.md/);
   // It points at files; it doesn't copy the learner's words.
   assert.doesNotMatch(context, /every time I type/);
 });
@@ -136,6 +138,10 @@ test("session start asks for a level when none is set", (t) => {
   cli(box, "on");
   const out = JSON.parse(hook(box, "session-start.mjs", { cwd: box.project }).stdout);
   assert.match(out.hookSpecificOutput.additionalContext, /Learner level: not set/);
+  assert.match(out.hookSpecificOutput.additionalContext, /No project brief yet/);
+  cli(box, "brief");
+  const unfinished = JSON.parse(hook(box, "session-start.mjs", { cwd: box.project }).stdout);
+  assert.match(unfinished.hookSpecificOutput.additionalContext, /brief is unfinished \(empty: who it's for/);
 });
 
 test("hooks.json registers the three hooks with node", () => {

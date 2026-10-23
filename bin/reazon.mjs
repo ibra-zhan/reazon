@@ -5,7 +5,8 @@
 //   reazon status                         where everything stands
 //   reazon on | off                       turn the gate on or off for this project
 //   reazon level [--set L] [--project]    show or set the level (--clear-project removes the override)
-//   reazon new --title T [--supersedes ID]
+//   reazon brief                          create the project brief if missing; report what's empty
+//   reazon new --title T [--supersedes ID] (needs a complete brief)
 //   reazon advance --id ID --to STAGE
 //   reazon chore --reason R               one-off pass, ends with Claude's reply
 //   reazon link --id ID --concepts "a, b"  record concept lessons a decision used
@@ -15,9 +16,11 @@
 import path from "node:path";
 import {
   advance,
+  createBrief,
   createDecision,
   findDecision,
   listDecisions,
+  readBrief,
   setField,
   unlocks,
 } from "../lib/decisions.mjs";
@@ -59,7 +62,9 @@ function requireText(flags, name) {
 
 // Returned with each stage change, so the reminder arrives at the moment it matters.
 const NEXT = {
-  framing: "Fill Problem and Forces, teach any new concepts, then advance to attempt.",
+  framing:
+    "Fill Problem, naming the brief line it serves. Add What matters only if the choice is a real " +
+    "tradeoff the brief doesn't settle. Teach only the concepts this decision needs, then advance to attempt.",
   attempt: "Ask for the learner's guess now as ▶ Your turn. Don't show or hint at options.",
   options:
     "Your reply must open with the stage strip and a ✓ Recorded as your first idea block " +
@@ -101,6 +106,7 @@ function status(root) {
     level,
     levelSource: source,
     decisionsDir: dir,
+    brief: readBrief(dir),
     decisions: decisions.map(summary),
     unlocked: decisions.some(unlocks),
     chore: activeChore(root),
@@ -112,6 +118,20 @@ function status(root) {
 
 const commands = {
   status: ({ root }) => status(root),
+
+  brief: ({ root }) => {
+    updateProject(root, { enabled: true });
+    const brief = createBrief(decisionsDir(loadProfile(), root));
+    return {
+      ok: true,
+      brief,
+      next: brief.complete
+        ? "The brief is complete. Show the decision map and ask which decision to start with, and why."
+        : "Ask the brief questions in one ▶ Your turn (who it's for, what they should be able to do, " +
+          "what will change over time), each with a one-line reason it matters. Record the answers " +
+          "word for word and show a ✓ Recorded receipt.",
+    };
+  },
 
   on: ({ root }) => ({ ok: true, project: root, settings: updateProject(root, { enabled: true }) }),
   off: ({ root }) => ({ ok: true, project: root, settings: updateProject(root, { enabled: false }) }),
@@ -136,6 +156,14 @@ const commands = {
     const title = requireText(flags, "title");
     const profile = loadProfile();
     const dir = decisionsDir(profile, root);
+    const brief = readBrief(dir);
+    if (!brief.complete) {
+      throw new Error(
+        brief.exists
+          ? `The project brief isn't finished. Empty sections: ${brief.missing.join(", ")}. Ask about those first.`
+          : "No project brief yet. Run `brief` and ask the brief questions before starting a decision."
+      );
+    }
     let supersedes = "";
     if (flags.supersedes !== undefined) {
       const old = findDecision(dir, flags.supersedes);

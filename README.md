@@ -8,8 +8,9 @@
 **Learn software design for real, while Claude builds your project.**
 
 A plugin for **Claude Code** that makes sure you actually understand what gets
-built. Before Claude writes code for a feature, you go through a short learning
-loop: you **learn the problem**, **take your own shot** at solving it, **see
+built. It starts with **you**: who the project is for, what they should be able to
+do, and what will change over time. Then, before Claude writes code for each
+feature, you go through a short learning loop: you **learn the problem**, **take your own shot** at solving it, **see
 where your idea holds up and where it breaks**, and **defend the choice you
 make**. Then Claude builds it and shows how the code follows your reasoning.
 
@@ -29,6 +30,8 @@ explain how it works.
   - [Install](#install)
   - [Your first decision](#your-first-decision)
 - [The learning loop](#the-learning-loop)
+  - [Start with the brief](#start-with-the-brief)
+  - [Then, one decision at a time](#then-one-decision-at-a-time)
 - [What it feels like](#what-it-feels-like)
 - [Why it works](#why-it-works)
 - [What you walk away with](#what-you-walk-away-with)
@@ -105,23 +108,48 @@ In your project, run:
 ```
 
 Then ask for whatever you want to build, the way you normally would. Reazon asks
-one question first: your level (Beginner, Intermediate, or Advanced). It
-remembers your answer for every project. From then on, Reazon runs the learning loop
-whenever you ask for a feature that involves a design choice.
+your level first (Beginner, Intermediate, or Advanced) and remembers it for every
+project. Then, before any technology comes up, it asks about the project itself:
+who it's for, what they should be able to do, and what will change over time.
+From then on, Reazon runs the learning loop whenever you ask for a feature that
+involves a design choice.
 
 Installing Reazon doesn't change anything in your other projects. It only turns
 on in a project once you start a decision there.
 
 ## The learning loop
 
+### Start with the brief
+
+Good design starts with the people, not the technology. Before the first decision
+in a project, Reazon asks three questions, each with a one-line reason it matters:
+
+- **Who is it for?** Recruiters, people looking at your projects, friends,
+  future collaborators? *(This decides what goes on the first screen.)*
+- **What should someone have done or learned by the time they leave?**
+  Understood what you do, seen your projects, contacted you? *(This decides
+  what it has to make easy.)*
+- **What will change over time?** Mostly fixed, or will you keep adding things?
+  *(This decides how content is stored and updated.)*
+
+Your answers are saved word for word in `docs/decisions/brief.md`. Reazon then
+shows a **decision map**: the decisions your project needs, each tied to your
+brief. You pick where to start and say why. Reazon only steps in if your pick
+depends on something that isn't decided yet.
+
+No decision can start until the brief exists, so Claude can't quietly assume
+what you want.
+
+### Then, one decision at a time
+
 Every meaningful change goes through five stages. Each one is recorded in a
 decision file, and code stays locked until you've worked through the first four.
 
 | Stage | What happens | What gets recorded |
 | --- | --- | --- |
-| **Framing** | Claude lays out the *forces*: what has to be true and what could go wrong. Any concept you haven't met yet gets a short lesson that explains the problem, never the answer. | Problem, Forces, Concepts |
+| **Framing** | Claude explains the problem and which line of your brief it serves. When the choice is a real tradeoff, it lists **what matters**: the needs and risks the options will be judged against, taken from your brief. Anything Claude assumes is marked as an assumption. Any concept you haven't met yet gets a short lesson that explains the problem, never the answer. | Problem, What matters (when needed), Concepts |
 | **Attempt** | You say how you'd do it, before seeing any options. A guess is always required. If you're stuck, the question gets smaller until a guess is possible. | Your first idea, in your words |
-| **Options** | Your idea goes on the table next to two or three real options and is evaluated honestly: what it gets right, which force it misses. If yours is the best fit, Reazon says so. | Options |
+| **Options** | Your idea goes on the table next to two or three real options and is evaluated honestly: what it gets right, and what it misses for your project. If yours is the best fit, Reazon says so. | Options |
 | **Accepted** | You pick and explain why. "Because it's simpler" doesn't count. Reazon pushes back until your reason points at a real tradeoff in your project. Code unlocks. | Decision, and your Why in your words |
 | **Built** | Claude writes the code, runs the checks, and explains how the code follows your Why. Code locks again. | Outcome |
 
@@ -130,9 +158,72 @@ words with only typos fixed, and shows you a receipt of exactly what it wrote.
 
 ## What it feels like
 
+These walkthroughs come from real sessions, lightly condensed.
+
+### Starting a project
+
+**You:**
+
+```text
+make me a personal website
+```
+
+**Claude:**
+
+```text
+Project brief
+
+Before we design anything, I want to understand what this site needs to do
+for you.
+
+▶ Your turn
+1. Who is this site for? Recruiters? People checking out your projects?
+   Friends? Future collaborators? (This decides what goes on the first screen.)
+2. What should someone have done or learned by the time they leave?
+   Understood what you do, seen your projects, contacted you, read your
+   writing? (This decides what the site has to make easy.)
+3. What will change over time? Is this mostly a fixed page, or will you keep
+   adding things like projects or posts? (This decides how content is stored.)
+```
+
+**You:**
+
+```text
+1. mostly recruiters and people who want to see my projects. 2. they should
+understand what I do and see my best projects, and be able to email me.
+3. I'll add a new project every couple of months, no blog for now
+```
+
+**Claude:**
+
+```text
+✓ Recorded in your brief
+> who it's for: mostly recruiters and people who want to see my projects.
+> what they should be able to do: they should understand what I do and see
+>   my best projects, and be able to email me.
+> what will change over time: I'll add a new project every couple of
+>   months, no blog for now
+
+◇ Decision map
+1. What goes on the first screen: for recruiters skimming fast
+2. How your projects are shown: so visitors see your best work
+3. How people reach you: making email easy to find and use
+4. How new projects get added: since you'll add one every couple of months
+
+▶ Your turn
+Which of these would you like to start with, and why?
+```
+
+From here, each decision runs through the loop, and the brief keeps it honest.
+When you pick "How new projects get added", **What matters** quotes your brief
+("You'll add a project every couple of months *(from your brief)*") instead of
+guessing what you want.
+
+### One decision, start to finish
+
 You're building a small notes app. Notes live in a JavaScript array, so they
-vanish every time the app closes. This walkthrough comes from a real session,
-lightly condensed.
+vanish every time the app closes. Your brief says you add notes every day and
+need them to stick around.
 
 **You:**
 
@@ -147,10 +238,11 @@ Make my notes survive closing the app.
 framing → attempt → options → accepted → built
           ^^^^^^^
 
-◇ Forces
-- A note has to still be there next time the app opens, even after a restart.
+Your brief says you add notes every day and need them after closing the app.
+
+◇ What matters
+- Notes are still there next time the app opens (from your brief).
 - One bad save shouldn't corrupt everything already written.
-- addNote and listNotes still need to work the same way for the rest of the app.
 
 ◇ Concept: memory vs disk · new, saved to concepts/memory-vs-disk.md
 A running program keeps its data in memory. Think of it as a desk: fast,
@@ -302,8 +394,8 @@ Concepts: memory-vs-disk
 src/notes.js keeps notes in a plain JavaScript array. When the app closes,
 that array is gone.
 
-## Forces
-- The note has to still be there the next time the app opens.
+## What matters
+- The note has to still be there the next time the app opens (from your brief).
 - One bad save shouldn't corrupt everything already written.
 
 ## Your first idea (your words)
@@ -358,7 +450,7 @@ guess is required at every level.
 
 | | Beginner | Intermediate | Advanced |
 | --- | --- | --- | --- |
-| **Forces** | 2–3, everyday language, concrete scenarios | 3–4, including how parts interact | Edge cases, failure modes, scale, operations |
+| **What matters** (when needed) | 2–3, everyday language, concrete scenarios | 3–4, including how parts interact | Edge cases, failure modes, scale, operations |
 | **Concepts** | Full lesson with an everyday analogy | Short definition | Only if niche |
 | **Options** | 2, plain words | 3, tradeoff table | 3+, including less obvious ones and operational costs |
 | **Pushback** | Gentle, one point at a time | Points to the specific gap | Challenges the premise itself |
@@ -441,6 +533,12 @@ settings apply to them.
 
 ## FAQ
 
+**Why does it ask about my project before teaching anything?**
+Because the right design depends on who it's for and what it has to do. The same
+two options can have opposite right answers for two different projects. Without
+your brief, Claude would have to guess your goals, and your decisions would be
+judged against its guesses instead of what you want.
+
 **Do I need to know anything about software design first?**
 No. Pick Beginner, and the concept lessons and smaller questions get you to a
 guess. Not knowing is where the loop starts.
@@ -452,7 +550,8 @@ more than skipping one.
 
 **Does Claude make up my reasoning?**
 No. "Your first idea" and "Why" hold only your words from chat, with typos fixed.
-Claude writes the Problem, Forces, Options, and Outcome sections. Every time your
+Your brief answers are yours too. Claude writes the Problem, What matters,
+Options, and Outcome sections. Every time your
 words are saved, you see a receipt of exactly what was written.
 
 **Isn't this slower than just letting Claude code?**
