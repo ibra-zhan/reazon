@@ -1,7 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" width="96" height="96" role="img" aria-label="Reazon: a path forking into a first guess and a final choice">
-  <rect width="96" height="96" rx="22" fill="#1E1B4B"/>
-  <path d="M48 72 V56 M48 56 C48 44 31 42 31 31 M48 56 C48 44 65 42 65 31" fill="none" stroke="#C7D2FE" stroke-width="6" stroke-linecap="round"/>
-  <circle cx="48" cy="76" r="6" fill="#C7D2FE"/>
-  <circle cx="31" cy="25" r="8" fill="none" stroke="#F9A8D4" stroke-width="5"/>
-  <circle cx="65" cy="25" r="9.5" fill="#FDE047"/>
-</svg>

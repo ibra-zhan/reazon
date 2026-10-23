@@ -1,6 +1,9 @@
-<img src=".claude-plugin/icon.svg" alt="Reazon: a path forking into a first guess and a final choice" width="96" height="96">
-
-# Reazon
+<h1>
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/logo-dark.png">
+    <img src="assets/logo-light.png" alt="Reazon" width="360">
+  </picture>
+</h1>
 
 **Learn software design for real, while Claude builds your project.**
 
